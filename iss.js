@@ -33,7 +33,17 @@ const fetchMyIP = function(callback) {
   });
 };
 
-module.exports = { fetchMyIP };
+
+const fetchCoordsByIP = function(ip, callback) {
+  request(``, (error, response, body) => {
+
+
+
+  })
+};
+
+
+module.exports = { fetchMyIP, fetchCoordsByIP };
 
 
 

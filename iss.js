@@ -35,23 +35,26 @@ const fetchMyIP = function(callback) {
 
 
 const fetchCoordsByIP = function(ip, callback) {
-  request(``, (error, response, body) => {
-
-
-
-  })
+  request(`https://ipvigilante.com/json/${ip}`, (error, response, body) => {
+    // console.log('body:', body);
+    // inside the request callback
+    // error can be set if invalide domain, user is offline, etc.
+    if (error) {
+      callback(error, null);
+    }
+    // if non-200 status, assume server error
+    if (response.statusCode !== 200) {
+      const msg = `Status${response.statusCode} when fetching coordinates for IP. Response: ${body}`;
+      callback(Error(msg), null);
+      return;
+    }
+    const latitude = JSON.parse(body).data.latitude;
+    const longitude = JSON.parse(body).data.longitude;
+    const coordinates = { latitude, longitude };
+    callback(null, coordinates);
+  
+  });
 };
 
 
 module.exports = { fetchMyIP, fetchCoordsByIP };
-
-
-
-// Test case
-
-// const request = require('request');
-// request('https://api.ipify.org?format=json', (error, response, body) => {
-//   console.log('error:', error); // Print the error if one occurred
-//   console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-//   console.log('body:', body); // Print the HTML for the Google homepage.
-// });

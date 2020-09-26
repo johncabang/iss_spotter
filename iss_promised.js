@@ -7,7 +7,7 @@ const request = require('request-promise-native');
 const fetchMyIP = function() {
   return request('https://api.ipify.org?format=json');
 };
-/* 
+/*
  * Makes a request to ipvigilante.com using the provided IP address, to get its geographical information (latitude/longitude)
  * Input: JSON string containing the IP address
  * Returns: Promise of request for lat/lon
@@ -24,12 +24,12 @@ const fetchISSFlyOverTimes = function(body) {
 
 const nextISSTimesForMyLocation = function() {
   return fetchMyIP()
-  .then(fetchCoordsByIP)
-  .then(fetchISSFlyOverTimes)
-  .then((data) => {
-    const { response } = JSON.parse(data);
-    return response;
-  });
-}
+    .then(fetchCoordsByIP)
+    .then(fetchISSFlyOverTimes)
+    .then((data) => {
+      const { response } = JSON.parse(data);
+      return response;
+    });
+};
 
 module.exports = { fetchMyIP, fetchCoordsByIP, fetchISSFlyOverTimes, nextISSTimesForMyLocation };
